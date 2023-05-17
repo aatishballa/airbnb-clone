@@ -6,14 +6,16 @@ import { useRouter } from "next/navigation"
 const Logo = () => {
   const router = useRouter()
   return (
-    <Image
-      onClick={() => router.push("/")}
-      className="hidden md:block cursor-pointer"
-      src="/images/logo.jpeg"
-      height="50"
-      width="50"
-      alt="Logo"
-    />
+    <div>
+      <Image
+        onClick={() => router.push("/")}
+        className="hidden md:block cursor-pointer"
+        src="/images/logo.png"
+        height="100"
+        width="100"
+        alt="Logo"
+      />
+    </div>
   )
 }
 export default Logo
