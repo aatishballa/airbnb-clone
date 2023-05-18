@@ -1,9 +1,47 @@
 'use client';
 
-
+import { useRouter } from "next/navigation";
+import { useState, useCallback } from "react";
 import Avatar from "../Avatar"
 import { AiOutlineMenu } from "react-icons/ai"
+import MenuItem from "./MenuItem";
+
 const UserMenu = () => {
+  const router = useRouter()
+  const [isOpen, setIsOpen] = useState(false)
+
+  const toggleOpen = useCallback(() => {
+    setIsOpen((value) => !value);
+  }, []);
+
+  const authenticatedMenuList = [
+    {
+      name: "My Trips",
+      to: '/trips'
+    },
+    {
+      name: "My Favourites",
+      to: '/favourites'
+    },
+    {
+      name: "My Reservations",
+      to: '/reservations'
+    },
+    {
+      name: "My Properties",
+      to: '/properties'
+    }
+  ]
+
+  const unauthenticatedMenuList = [
+    { name: "Sign Up", to: '/signup' },
+    { name: "Log In", to: '/login' }
+  ]
+
+  const goTo = (to: string) => {
+    router.push(to)
+  }
+
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
@@ -19,7 +57,7 @@ const UserMenu = () => {
 
         <div
           className="flex flex-row"
-          onClick={() => { }}
+          onClick={toggleOpen}
         >
           <div
             className="
@@ -44,6 +82,33 @@ const UserMenu = () => {
             </div>
           </div>
         </div>
+
+        {isOpen && (
+
+          <div
+            className="
+              absolute 
+              rounded-xl 
+              shadow-md
+              w-[40vw]
+              md:w-3/4 
+              bg-white 
+              overflow-hidden 
+              right-0 
+              top-12 
+              text-sm
+            "
+          >
+            <div className="flex flex-col">
+              {unauthenticatedMenuList.map((item, index) =>
+                <MenuItem
+                  key={index}
+                  title={item.name}
+                  onClick={() => goTo(item.to)}
+                />)}
+            </div>
+          </div>
+        )}
       </div>
 
     </div>
